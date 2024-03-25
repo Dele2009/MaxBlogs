@@ -18,7 +18,6 @@ router.post('/add-blog', async (req, res) => {
   console.log(req.body)
   try {
     await _blog.save()
-    // res.json({ redirect: '/blogs/all-blogs' })
     res.redirect('/')
    
   } catch (error) {
