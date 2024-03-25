@@ -12,7 +12,7 @@ const app = express()
 mongoose
   .connect(mongo_url)
   .then(result => console.log('database conected'))
-  .catch(err => console.log('eror' + err))
+  .catch(err => console.log('Error Detected' + err))
 
 //using the ejs template to render
 app.set('view engine', 'ejs')
@@ -20,9 +20,10 @@ app.set('views', 'pages')
 
 //serving static documents
 app.use(express.json())
-app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
 app.use(morgan('dev'))
+
 
 
 
