@@ -1,7 +1,8 @@
 const express = require('express')
 
-const Blog = require('../models/blog')
+// const Blog = require('../models/blog')
 const Newblogs = require('../models/newblogs')
+const upload= require('../middleware/upload')
 
 const router = express.Router()
 
@@ -12,10 +13,24 @@ router.get('/create', (req, res) => {
   res.render('blogs', { title: 'Create A Blog' })
 })
 
-router.post('/add-blog', async (req, res) => {
+router.post('/add-blog',upload.single('heroimage') ,async (req, res) => {
  
-  const _blog = new Newblogs(req.body)
+  const _blog = new Newblogs({
+    author:req.body.author,
+    category:req.body.category,
+    title:req.body.title,
+    header:req.body.header,
+    heroimage:req.file.filename,
+    blog:req.body.blog
+
+  })
+//   if(req.file){
+//     _blog.heroimage=req.file.path
+//   }
   console.log(req.body)
+  console.log(req.file)
+  console.log(_blog)
+
   try {
     await _blog.save()
     res.redirect('/')
