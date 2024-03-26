@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <%-include('./components/head')%>
+
+    <body>
+        <%-include('./components/header')%>
+        
+
+            <main class="row justify-content-center align-items-center mt-5">
+                <div class="col-12 col-lg-6">
+                    <form action="" method="post" enctype="multipart/form-data">
+
+                        <h1 class="h3 mb-3 fw-normal text-center mb-5">Sign-Up to Become a writer</h1>
+                        <div class="form-floating my-3">
+                            <input type="text" class="form-control" id="name" name="name" required placeholder="">
+                            <label for="name">Name *</label>
+                        </div>
+
+                        <div class="form-floating my-3">
+                            <input type="email" class="form-control" id="email" name="email" required placeholder="">
+                            <label for="email">Email Address *</label>
+                        </div>
+
+                        <div class="my-3">
+                            <input type="file" class="form-control" id="avatar" name="avatar" required placeholder="">
+                            <label for="avatar">Upload Profile-Picture</label>
+                        </div>
+
+                        <div class="form-floating my-3">
+                            <input type="password" class="form-control" id="password" name="password" required placeholder="">
+                            <label for="password">Blog Header</label>
+                        </div>
+
+                        
+
+                       
+                        <button class="btn btn-primary w-100 py-2">Sign-Up</button>
+                       
+                    </form>
+                </div>
+            </main>
+            
+            <script>
+
+                // const handle_submit= async (e) => {
+                //     e.preventDefault()
+                //     let author = document.getElementById('author').value
+                //     let category = document.getElementById('category').value
+                //     let title = document.getElementById('title').value
+                //     let header = document.getElementById('header').value
+                //     let blog = document.getElementById('blog').value
+
+                //     if(author&&category&&title&&header&&blog){
+                //          try {
+                //             const data= {author,category,title,header,blog}
+                //             const options={
+                //                 method:'POST',
+                //                 body:JSON.stringify(data),
+                //                 headers:{
+                //                     'Content-Type':'application/json'
+                //                 }
+                //             }
+                //             const response= await fetch('/blogs/add-blog', options)
+                //             const json = await response.json()
+                //             // window.location.href = json.redirect;
+                //             // console.log(data)
+                //          } catch (error) {
+                //             console.log(error)
+                //          }
+                //     }
+                // }
+
+            </script>
+    </body>
+
+</html>

@@ -30,8 +30,9 @@ const blogschema = new Schema(
     //   type: String
     // },
     heroimage:{
-        type:String,
-        required:true
+        data:Buffer,
+        contentType:String
+        // required:true
     },
     blog: {
       type: String,
