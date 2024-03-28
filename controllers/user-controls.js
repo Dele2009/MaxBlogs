@@ -1,5 +1,6 @@
 const Newuser = require('../models/User')
 const cloudinary = require('../middleware/cloudinary')
+const bcrypt = require('bcrypt')
 
 const add_new_user = async (req, res) => {
     try {
@@ -17,6 +18,7 @@ const add_new_user = async (req, res) => {
         }
         const filePath = req.file.path;
         const result = await cloudinary.uploader.upload(filePath, { folder: 'UserAvatars' });
+        const hashpassword = await bcrypt.hash(password,10);
 
         const _user_account_info = new Newuser({
             name,
@@ -25,7 +27,7 @@ const add_new_user = async (req, res) => {
                 public_id: result.public_id,
                 url: result.secure_url
             },
-            password
+            password:hashpassword
         })
         //   if(req.file){
         //     _blog.heroimage=req.file.path
@@ -49,7 +51,7 @@ const log_in = async(req,res)=>{
         const password = req.body.password    
         const user = await Newuser.findOne({email:email})
         if(user){
-            if(user.password===password){
+            if(bcrypt.compare(password,user.password)){
                    console.log(user)
                    res.render('user_dashboard',{User:user})
             }
