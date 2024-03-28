@@ -74,3 +74,23 @@
 .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
 }
+
+
+.h-p{
+    height: 600px !important;
+}
+
+.mess{
+    transform: translate(-10px,100px)   ;
+}
+
+/* .slider-text{
+   background-repeat: no-repeat;
+   background-size: cover;
+   
+} */
+
+/* .swiper {
+    width: 600px;
+    height: 300px;
+} */

@@ -3,6 +3,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 require('dotenv').config()
 const {router} = require('./routes/routes')
+const {user_router} = require('./routes/userRoutes')
 
 const port = process.env.App_Port || 4000;
 const mongo_url=process.env.Mongo_Url
@@ -19,10 +20,11 @@ app.set('view engine', 'ejs')
 app.set('views', 'pages')
 
 //serving static documents
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-app.use('/uploads',express.static('uploads'))
+// app.use('/uploads',express.static('uploads'))
 app.use(morgan('dev'))
 
 
@@ -35,6 +37,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/blogs', router)
+app.use('/user', user_router)
 
 app.listen(port, () => {
   console.log('App running on localhost:',port)

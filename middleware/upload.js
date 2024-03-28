@@ -1,7 +1,7 @@
 const path = require('path')
 const multer = require('multer')
 
-const storage = multer.memoryStorage()
+const storage = multer.diskStorage({})
 
 const upload= multer({
     storage:storage,

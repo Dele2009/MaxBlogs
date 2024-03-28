@@ -12,9 +12,7 @@ router.get('/create', (req, res) => {
   res.render('blogs', { title: 'Create A Blog' })
 })
 
-router.get('/sign-up', (req, res) => {
-    res.render('Login', { title: 'Sign Up' })
-})
+
 
 
 

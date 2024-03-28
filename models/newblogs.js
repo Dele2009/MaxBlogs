@@ -29,16 +29,21 @@ const blogschema = new Schema(
     // snippet: {
     //   type: String
     // },
-    heroimage:{
-        data:Buffer,
-        contentType:String
-        // required:true
+    heroimage_info: {
+      public_id: {
+        type: String,
+        required: true
+      },
+      url: {
+        type: String,
+        required: true
+      }
     },
     blog: {
       type: String,
       required: true
     }
-    
+
   },
   { timestamps: true }
 )

@@ -9,17 +9,23 @@
 
             <main class="row justify-content-center align-items-center mt-5">
                 <div class="col-10 col-lg-6">
-                    <form action="/user/log-in" method="post">
+                    <form action="/user/sign-up" method="post" enctype="multipart/form-data">
 
-                        <h1 class="h3 mb-3 fw-normal text-center mb-5">Login To Your Account</h1>
-                        
+                        <h1 class="h3 mb-3 fw-normal text-center mb-5">Sign-Up to Become a writer</h1>
+                        <div class="form-floating my-3">
+                            <input type="text" class="form-control" id="name" name="name" required placeholder="">
+                            <label for="name">Name *</label>
+                        </div>
 
                         <div class="form-floating my-3">
                             <input type="email" class="form-control" id="email" name="email" required placeholder="">
                             <label for="email">Email Address *</label>
                         </div>
 
-                       
+                        <div class="my-3">
+                            <input type="file" class="form-control" id="avatar" name="avatar" required placeholder="">
+                            <label for="avatar">Upload Profile-Picture</label>
+                        </div>
 
                         <div class="form-floating my-3">
                             <input type="password" class="form-control" id="password" name="password" required placeholder="">
@@ -29,7 +35,7 @@
                         
 
                        
-                        <button class="btn btn-primary w-100 py-2">Login-In</button>
+                        <button class="btn btn-primary w-100 py-2">Sign-Up</button>
                        
                     </form>
                 </div>
