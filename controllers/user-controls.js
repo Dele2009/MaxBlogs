@@ -11,15 +11,15 @@ const add_new_user = async (req, res) => {
         //     return;
         //   }
 
-      
+
         // const opt = {
         //   use_filename: true,
         //   unique_filename: false,
         //   overwrite: true,
         //   resource_type: "auto"
         // };
-        const exist = Newuser.findOne({email});
-        if(exist){
+        const exist = Newuser.findOne({ email });
+        if (exist) {
             console.log('User Already Exists')
         }
         if (!req.file) {
@@ -29,7 +29,7 @@ const add_new_user = async (req, res) => {
         const filePath = req.file.path;
         const result = await cloudinary.uploader.upload(filePath, { folder: 'UserAvatars' });
         const salt = await bcrypt.genSalt(15);
-        const hashpassword = await bcrypt.hash(password,salt);
+        const hashpassword = await bcrypt.hash(password, salt);
 
         const _user_account_info = new Newuser({
             name,
@@ -38,7 +38,7 @@ const add_new_user = async (req, res) => {
                 public_id: result.public_id,
                 url: result.secure_url
             },
-            password:hashpassword
+            password: hashpassword
         })
         //   if(req.file){
         //     _blog.heroimage=req.file.path
@@ -48,30 +48,30 @@ const add_new_user = async (req, res) => {
         console.log(req.body)
         console.log(result)
         console.log(_user_account_info)
-          res.redirect('/user/log-in')
+        res.redirect('/user/log-in')
 
     } catch (error) {
         console.log(error)
     }
 }
 
-const log_in = async(req,res)=>{
-   
+const log_in = async (req, res) => {
+
     try {
-        const {email,password} = req.body   
-        const user = await Newuser.findOne({email})
-        if(user){
-            const is_matched = await bcrypt.compare(password,user.password)
-            if(is_matched){
-                   console.log(user)
-                   req.session.user = user;
-                   console.log(req.session)
-                   res.redirect('/user/dashboard')
+        const { email, password } = req.body
+        const user = await Newuser.findOne({ email })
+        if (user) {
+            const is_matched = await bcrypt.compare(password, user.password)
+            if (is_matched) {
+                console.log(user)
+                req.session.user = user;
+                console.log(req.session)
+                res.redirect('/user/dashboard')
             }
-            else{
+            else {
                 console.log('password error')
             }
-        }else{
+        } else {
             console.log('user does not exist')
         }
     } catch (error) {
@@ -79,21 +79,25 @@ const log_in = async(req,res)=>{
     }
 }
 
-const Show_user_dashboard= async (req, res) => {
+const Show_user_dashboard = async (req, res) => {
     try {
+        if (!req.session.user) {
+            // If session exists but user is not logged in, redirect to login page
+            return res.redirect('/user/log-in');
+        }
         const userId = req.session.user._id;
         const user = await Newuser.findById(userId)
         //const user = await User.findById(userId).populate('authoredBlogs');
         if (!user) throw new Error('User not found');
-        res.render('user_dashboard', { User:user });
+        res.render('user_dashboard', { User: user });
     } catch (error) {
-        res.status(500).send('Error fetching dashboard: ' + error.message);
+        return res.status(500).send('Error fetching dashboard: ' + error.message);
     }
 }
 
 
 
-const log_out= (req, res) => {
+const log_out = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
@@ -103,7 +107,7 @@ const log_out= (req, res) => {
     });
 };
 
-module.exports={
+module.exports = {
     add_new_user,
     log_in,
     Show_user_dashboard,
