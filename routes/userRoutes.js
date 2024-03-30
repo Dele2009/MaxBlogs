@@ -18,4 +18,8 @@ user_router.get('/log-in',(req, res) => {
 
 user_router.post('/log-in', usercontrols.log_in)
 
+user_router.get('/dashboard', usercontrols.Show_user_dashboard);
+user_router.get('/log-out', usercontrols.log_out)
+
+
 module.exports= {user_router}
