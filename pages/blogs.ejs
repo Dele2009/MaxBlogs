@@ -1,25 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <%-include('./components/main_app_head')%>
+<%-include('./components/main_app_head')%>
 
     <body>
         <%-include('./components/main_app_header')%>
-        
+
 
             <main class="row justify-content-center align-items-center mt-5">
                 <div class="col-10">
                     <form action="/user/dashboard/create-blog" method="post" enctype="multipart/form-data">
 
-                        <h1 class="h3 mb-3 fw-normal text-center mb-5">Add A New Blog</h1>
+                        <h1 class="h3 mb-3 fw-normal text-center mb-5">Write A New Blog</h1>
                         <div class="form-floating my-3">
+
+                            <input type="text" class="form-control" id="author" name="author-id" required
+                                value="<%=User._id%>" hidden>
                             
-                            <input type="text" class="form-control" id="author" name="author" required value="<%=User.name%>">
-                            <label for="author">Blog author</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control py-3" id="author" name="author" required
+                                    value="<%=User.name%>" placeholder="Blog author" disabled>
+                                <button class="btn btn-primary" type="button" id="button-addon2">Edit Author</button>
+                            </div>
+
+                            <script>
+                                let EditBtn = document.getElementById('button-addon2')
+
+                                let setter = true
+                                EditBtn.addEventListener('click', () => {
+                                    if (setter) {
+                                        document.getElementById('author').disabled = false;
+                                        EditBtn.innerHTML = "Save Changes"
+                                        setter = false
+                                    }
+                                    else {
+                                        document.getElementById('author').disabled = true;
+                                        EditBtn.innerHTML = "Save Changes"
+                                        setter = true
+                                    }
+                                })
+                            </script>
+
                         </div>
-                        <div class="form-floating my-3">
-                            <select class="form-select" id="category" name="category" required>
-                                <option selected>.......SELECT.......</option>
+
+
+                        <div class="input-group my-3">
+                            <label class="input-group-text" for="category">Blog Catergory</label>
+                            <select class="form-select py-3" id="category" name="category" required>
+                                <option selected>Choose...</option>
                                 <option value="World">World</option>
                                 <option value="Technology">Technology</option>
                                 <option value="Design">Design</option>
@@ -31,9 +59,7 @@
                                 <option value="Health">Health</option>
                                 <option value="Style">Style</option>
                                 <option value="Travel">Travel</option>
-
                             </select>
-                            <label for="category">Blog Catergory</label>
                         </div>
 
                         <div class="form-floating my-3">
@@ -45,22 +71,23 @@
                             <label for="header">Blog Header</label>
                         </div>
                         <div class="form-floating my-3">
-                            <input type="file" class="form-control" id="heroimage" name="heroimage" required placeholder="">
+                            <input type="file" class="form-control" id="heroimage" name="heroimage" required
+                                placeholder="">
                             <label for="heroimage">Blog Hero-Image</label>
                         </div>
                         <div class="my-3">
-                            
+
                             <textarea id="blog" cols="30" rows="30" name="blog"></textarea>
-                           
+
                         </div>
 
-                       
+
                         <button class="btn btn-dark  py-2">Publish blog</button>
-                       
+
                     </form>
                 </div>
             </main>
-            
+
             <script>
 
                 // const handle_submit= async (e) => {
