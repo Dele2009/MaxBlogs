@@ -8,53 +8,7 @@ const cloudinary = require('../middleware/cloudinary')
 
 
 
-const add_new_blog = async (req, res) => {
 
-
-  try {
-    const { author, category, title, header, blog } = req.body
-
-    // const opt = {
-    //   use_filename: true,
-    //   unique_filename: false,
-    //   overwrite: true,
-    //   resource_type: "auto"
-    // };
-    if (!req.file) {
-      console.log('no file')
-      //return res.status(400).json({ message: 'No file uploaded' });
-  }
-    const filePath = req.file.path;
-     // Get the file path
-    // const fileData = await fsPromises.readFile(filePath);
-    const result = await cloudinary.uploader.upload(filePath,{folder:'blogphotos'});
-
-    const _blog = new Newblogs({
-      author,
-      category,
-      title,
-      header,
-      heroimage_info:{ 
-        public_id:result.public_id,
-        url:result.secure_url
-      },
-      blog
-
-    })
-    //   if(req.file){
-    //     _blog.heroimage=req.file.path
-    //   }
-    
-    await _blog.save()
-    console.log(req.body)
-    console.log(result)
-    console.log(_blog)
-    res.redirect('/')
-
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 
 const get_blogs = async (req, res) => {
@@ -109,7 +63,6 @@ const delete_blog = async (req, res) => {
 }
 
 module.exports = {
-  add_new_blog,
   get_blogs,
   get_a_blog,
   get_blog_category,

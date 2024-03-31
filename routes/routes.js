@@ -8,15 +8,7 @@ const router = express.Router()
 router.get('/about', (req, res) => {
   res.render('about', { title: 'About Us' })
 })
-router.get('/create', (req, res) => {
-  res.render('blogs', { title: 'Create A Blog' })
-})
 
-
-
-
-
-router.post('/add-blog', upload.single('heroimage'), blogcontrols.add_new_blog)
 
 //get all blogs
 router.get('/all-blogs', blogcontrols.get_blogs)

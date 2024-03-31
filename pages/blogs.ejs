@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <%-include('./components/head')%>
+    <%-include('./components/main_app_head')%>
 
     <body>
-        <%-include('./components/header')%>
+        <%-include('./components/main_app_header')%>
         
 
             <main class="row justify-content-center align-items-center mt-5">
                 <div class="col-10">
-                    <form action="/blogs/add-blog" method="post" enctype="multipart/form-data">
+                    <form action="/user/dashboard/create-blog" method="post" enctype="multipart/form-data">
 
                         <h1 class="h3 mb-3 fw-normal text-center mb-5">Add A New Blog</h1>
                         <div class="form-floating my-3">
-                            <input type="text" class="form-control" id="author" name="author" required placeholder="">
+                            
+                            <input type="text" class="form-control" id="author" name="author" required value="<%=User.name%>">
                             <label for="author">Blog author</label>
                         </div>
                         <div class="form-floating my-3">
