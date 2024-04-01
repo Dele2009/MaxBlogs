@@ -111,7 +111,7 @@ const load_blogCreate = async (req, res) => {
         // const Author_name = user.name;
         return res.render('blogs', { title: 'Create A Blog', User:user })
     } catch (error) {
-        
+        console.log(error)
     }
     
 }
@@ -122,7 +122,7 @@ const create_blog = async (req, res) => {
 
 
     try {
-      const { author, category, title, header, blog } = req.body
+      const { author_id, author, category, title, header, blog } = req.body
   
       // const opt = {
       //   use_filename: true,
@@ -141,6 +141,7 @@ const create_blog = async (req, res) => {
   
       const _blog = new Newblogs({
         author,
+        author_id,
         category,
         title,
         header,

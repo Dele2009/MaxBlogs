@@ -14,6 +14,10 @@ const blogschema = new Schema(
       type: String,
       required: true
     },
+    author_id: {
+      type: String,
+      required: true
+    },
     category: {
       type: String,
       required: true

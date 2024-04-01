@@ -14,32 +14,16 @@
                         <h1 class="h3 mb-3 fw-normal text-center mb-5">Write A New Blog</h1>
                         <div class="form-floating my-3">
 
-                            <input type="text" class="form-control" id="author" name="author-id" required
+                            <input type="text" class="form-control" id="author_id" name="author_id" required
                                 value="<%=User._id%>" hidden>
-                            
+
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control py-3" id="author" name="author" required
-                                    value="<%=User.name%>" placeholder="Blog author" disabled>
-                                <button class="btn btn-primary" type="button" id="button-addon2">Edit Author</button>
+                                    value="<%=User.name%>" placeholder="Blog author" readonly>
+                                <!-- <button class="btn btn-primary" type="button" id="button-addon2" >Edit Author</button> -->
                             </div>
 
-                            <script>
-                                let EditBtn = document.getElementById('button-addon2')
-
-                                let setter = true
-                                EditBtn.addEventListener('click', () => {
-                                    if (setter) {
-                                        document.getElementById('author').disabled = false;
-                                        EditBtn.innerHTML = "Edit Author"
-                                        setter = false
-                                    }
-                                    else {
-                                        document.getElementById('author').disabled = true;
-                                        EditBtn.innerHTML = "Save Changes"
-                                        setter = true
-                                    }
-                                })
-                            </script>
+                           
 
                         </div>
 
@@ -89,6 +73,27 @@
             </main>
 
             <script>
+                 
+                               
+
+
+                                // let EditBtn = document.getElementById('button-addon2');
+                                // let authorInput = document.getElementById('author');
+                                // let setter = true;
+
+                                // EditBtn.addEventListener('click', () => {
+                                    
+                                //     if (setter) {
+                                //         authorInput.readOnly = false;
+                                //         EditBtn.innerHTML = "Save Changes";
+                                //         setter = false;
+                                //     } else {
+                                //         authorInput.readOnly = true;
+                                //         EditBtn.innerHTML = "Edit Author";
+                                //         setter = true;
+                                //     }
+                                // });
+                            
 
                 // const handle_submit= async (e) => {
                 //     e.preventDefault()
