@@ -19,9 +19,11 @@ const sign_up = async (req, res) => {
         //   overwrite: true,
         //   resource_type: "auto"
         // };
-        const exist = Newuser.findOne({ email });
+        const exist = await Newuser.findOne({ email });
         if (exist) {
             console.log('User Already Exists')
+            return res.json({ message: 'User Already Exists',error:true })
+
         }
         if (!req.file) {
             console.log('no file')
@@ -48,7 +50,7 @@ const sign_up = async (req, res) => {
         console.log(req.body)
         console.log(result)
         console.log(_user_account_info)
-        res.redirect('/user/log-in')
+        return res.json({ redirectTo: '/user/log-in', message: 'Account Created Successfully',error:false })
 
     } catch (error) {
         console.log(error)
@@ -56,32 +58,41 @@ const sign_up = async (req, res) => {
 }
 
 const log_in = async (req, res) => {
-
     try {
-        const { email, password } = req.body
-        const user = await Newuser.findOne({ email })
-        if (user) {
-            const is_matched = await bcrypt.compare(password, user.password)
-            if (is_matched) {
-                console.log(user)
-                req.session.user = {
-                    _id:user._id,
-                    name:user.name,
-                    avatar_info:user.avatar_info
-                };
-                console.log(req.session)
-                res.redirect('/user/dashboard')
-            }
-            else {
-                console.log('password error')
-            }
-        } else {
-            console.log('user does not exist')
+        const { email, password } = req.body;
+        const user = await Newuser.findOne({ email });
+        console.log(user)
+
+        if (!user) {
+            console.log('User does not exist');
+            return res.json({ message: "Invalid Credentials: Can't find user",error:true });
         }
+
+        const isMatched = await bcrypt.compare(password, user.password);
+        if (!isMatched) {
+            console.log('Invalid password');
+            return res.json({ message: 'Invalid Credentials: Wrong password',error:true });
+        }
+
+        console.log('User logged in:', user);
+        req.session.user = {
+            _id: user._id,
+            name: user.name,
+            avatar_info: user.avatar_info,
+            email: user.email
+        };
+
+        console.log(req.session);
+        if(req.session.user){
+            return res.json({ redirectTo: '/user/dashboard', message: 'Login successfully',error:false });
+        }
+        
+        // res.redirect('/user/dashboard')
     } catch (error) {
-        console.log(error)
+        console.error('Login error:', error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
-}
+};
 
 const Show_user_dashboard = async (req, res) => {
     try {
@@ -92,11 +103,11 @@ const Show_user_dashboard = async (req, res) => {
             const user = req.session.user;
             // const user = await Newuser.findById(userId)
             //const user = await User.findById(userId).populate('authoredBlogs');
-            if (!user) { 
-                throw new Error('User not found'); 
+            if (!user) {
+                throw new Error('User not found');
             }
             else {
-                res.render('user_dashboard', { User: user });
+                res.render('user_dashboard', { title: 'account', User: user });
             }
         }
     } catch (error) {
@@ -106,14 +117,18 @@ const Show_user_dashboard = async (req, res) => {
 
 const load_blogCreate = async (req, res) => {
     try {
+        if (!req.session.user) {
+            // If session exists but user is not logged in, redirect to login page
+            return res.redirect('/user/log-in');
+        }
         const user = req.session.user;
         // const user = await Newuser.findById(user.id)
         // const Author_name = user.name;
-        return res.render('blogs', { title: 'Create A Blog', User:user })
+        return res.render('blogs', { title: 'Create A Blog', User: user })
     } catch (error) {
         console.log(error)
     }
-    
+
 }
 
 
@@ -122,48 +137,47 @@ const create_blog = async (req, res) => {
 
 
     try {
-      const { author_id, author, category, title, header, blog } = req.body
-  
-      // const opt = {
-      //   use_filename: true,
-      //   unique_filename: false,
-      //   overwrite: true,
-      //   resource_type: "auto"
-      // };
-      if (!req.file) {
-        console.log('no file')
-        //return res.status(400).json({ message: 'No file uploaded' });
-    }
-      const filePath = req.file.path;
-       // Get the file path
-      // const fileData = await fsPromises.readFile(filePath);
-      const result = await cloudinary.uploader.upload(filePath,{folder:'blogphotos'});
-  
-      const _blog = new Newblogs({
-        author,
-        author_id,
-        category,
-        title,
-        header,
-        heroimage_info:{ 
-          public_id:result.public_id,
-          url:result.secure_url
-        },
-        blog
-  
-      })
-      //   if(req.file){
-      //     _blog.heroimage=req.file.path
-      //   }
-      
-      await _blog.save()
-      console.log(req.body)
-      console.log(result)
-      console.log(_blog)
-      res.redirect('/')
-  
+        const { author, category, title, blog } = req.body
+        const author_id = req.session.user._id
+
+        // const opt = {
+        //   use_filename: true,
+        //   unique_filename: false,
+        //   overwrite: true,
+        //   resource_type: "auto"
+        // };
+        if (!req.file) {
+            console.log('no file')
+            return res.json({ message: 'No file uploaded',error:true });
+        }
+
+        // Get the file path
+        const filePath = req.file.path;
+        const result = await cloudinary.uploader.upload(filePath, { folder: 'blogphotos' });
+
+        const _blog = new Newblogs({
+            author,
+            author_id,
+            category,
+            title,
+            heroimage_info: {
+                public_id: result.public_id,
+                url: result.secure_url
+            },
+            blog
+
+        })
+
+        await _blog.save()
+        console.log(req.body)
+        console.log(result)
+        console.log(_blog)
+        return res.json({ redirectTo: '/', message: 'Blog created successfully',error:false });
+        
+
     } catch (error) {
-      console.log(error)
+        console.log(error)
+        return res.json({  message: error ,error:true });
     }
 }
 

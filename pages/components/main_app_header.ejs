@@ -137,14 +137,14 @@
         <!-- User Dropdown-->
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="img-fluid" src="<%=User.avatar_info.url%>" width="50" height="50"/>
+                <img class="img-fluid" src="<%=User.avatar_info.url%>" style="border-radius: 50%;width: 50px;height: 50px;object-fit: cover;"/>
             </a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="" />
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name text-capitalize"><%=User.name%></div>
-                        <div class="dropdown-user-details-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d7cdd4cfc0e1c0cecd8fc2cecc">[email&#160;protected]</a></div>
+                        <div class="dropdown-user-details-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d7cdd4cfc0e1c0cecd8fc2cecc"><%=User.email%></a></div>
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
@@ -160,3 +160,4 @@
         </li>
     </ul>
 </nav>
+

@@ -15,10 +15,7 @@ const blogschema = new Schema(
       type: String,
       required: true
     },
-    header: {
-      type: String,
-      required: true
-    },
+    
     // snippet: {
     //   type: String
     // },
