@@ -1,6 +1,8 @@
 //const Blog = require('../models/blog')
 const Newblogs = require('../models/newblogs')
 const cloudinary = require('../middleware/cloudinary')
+const { formatDistanceToNow } = require('date-fns')
+
 
 
 
@@ -16,7 +18,7 @@ const get_blogs = async (req, res) => {
     // const result = await Blog.find()
     const result = await Newblogs.find().sort({ createdAt: -1 })
 
-    res.render('test', { title: 'Home', Blogs: result })
+    res.render('test', { title: 'Home', Blogs: result,formatDistanceToNow: formatDistanceToNow, })
   } catch (error) {
     console.log(error)
   }

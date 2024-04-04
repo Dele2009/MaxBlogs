@@ -9,7 +9,12 @@
                     <a href="/blogs/<%=blog._id%>"><img class="card-img-top"
                             src="<%=blog.heroimage_info.url%>" alt="<%=blog.title%>_img"  width="700" height="200"/></a>
                     <div class="card-body">
-                        <div class="small text-muted"><%=blog.createdAt.toLocaleDateString()%></div>
+                        
+                        <%const createdAt = new Date( blog.createdAt )%>
+                        <%const relativeTime = formatDistanceToNow(createdAt, { addSuffix: true })%>
+                            
+                       
+                        <div class="small text-muted"><%=relativeTime.replace('about ', '')%></div>
                         <h2 class="card-title h4"><%=blog.title%></h2>
                         <p class="card-text"><%=blog.header%></p>
                         <a class="btn btn-primary" href="/blogs/<%=blog._id%>">Read more →</a>

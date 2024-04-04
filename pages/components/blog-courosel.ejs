@@ -64,7 +64,9 @@
               </p>
               <small>
                 <em>
-                  <%=blog.createdAt.toLocaleDateString()%>
+                  <%const createdAt = new Date( blog.createdAt )%>
+                  <%const relativeTime = formatDistanceToNow(createdAt, { addSuffix: true })%>
+                  <%=relativeTime.replace('about ', '')%>
                 </em>
               </small>
               <p class="lead mb-0"><a href="/blogs/<%=blog._id%>" class="text-body-emphasis fw-bold">Continue
