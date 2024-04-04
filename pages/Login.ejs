@@ -6,90 +6,82 @@
     <body>
         <%-include('./components/header')%>
 
-            <style>
-                .spinner {
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 50%;
-                    background: radial-gradient(farthest-side, #ffffff 94%, #0000) top/6.4px 6.4px no-repeat,
-                        conic-gradient(#0000 30%, #ffffff);
-                    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 3.8px), #000 0);
-                    animation: spinner-c7wet2 1s infinite linear;
-                }
+        <%-include('./components/Alertbox')%>
 
-                @keyframes spinner-c7wet2 {
-                    100% {
-                        transform: rotate(1turn);
-                    }
-                }
-
-                .mybtn {
-                    display: grid;
-                    place-items: center;
-                }
-
-                .alert-wd{
-                    width: fit-content;
-                }
-                #Message{
-                    font-size: 20px;
-                    padding: 0px 30px;
-                }
-            </style>
-
-            <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-                <symbol id="check-circle-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                </symbol>
-                <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                </symbol>
-            </svg>
-
-            <div class="alert d-flex align-items-center ms-auto alert-wd" role="alert" id="alert"
-                style="visibility: hidden;">
-                <svg class="bi flex-shrink-0 me-1" role="img" style="width: 30px;height:30px;">
-                    <use id="infoIcon" xlink:href="#exclamation-triangle-fill" />
-                </svg>
-                <div >
-                   <i id="Message"></i>
-                </div>
-            </div>
             <main class="row justify-content-center align-items-center mt-5">
 
-                <div class="col-10 col-lg-6">
+                <div class="col-10 col-lg-4">
                     <form id="LoginForm">
 
                         <h1 class="h3 mb-3 fw-normal text-center mb-5">Login To Your Account</h1>
 
 
-                        <div class="form-floating my-3">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="">
-                            <label for="email">Email Address *</label>
+                        <div class="my-3">
+                            <input type="email" class="form-control py-3" id="email" name="email" placeholder="Email Address *">
+                            
+                        </div>
+
+
+                        <div class="">
+                           
+                            <div class="input-group mb-3">
+                                
+                              <input type="password" class="form-control py-3" id="password" name="password" placeholder="Password *">
+                              <span class="input-group-text" onclick="togglePasswordVisibility()">
+                                <img id="eyeIcon" class="eye-icon" src="/assects/icons/eye-closed-svgrepo-com (1).svg" width="25" height="25">
+                              </span>
+
+                            </div>
+                            
+                            <!-- <i id="passwordError" class="error-message"></i> -->
                         </div>
 
 
 
-                        <div class="form-floating my-3">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="">
-                            <label for="password">Password *</label>
-                        </div>
 
-
-
-
-                        <button class="btn btn-primary w-100 py-2 mybtn" type="submit">
+                        <button class="btn btn-primary w-100 mybtn" type="submit">
                             <span id="text">Log-In</span>
                             <div class="spinner" id="loader" style="display: none;"></div>
                         </button>
 
+                        
+
                     </form>
+                    <div class="mt-5 fs-5">
+                        <p class="text-center">Don't have account? <a href="/user/sign-up" class="text-primary"><i>Sign up</i></a></p>
+                    </div>
                 </div>
             </main>
-
             <script>
+                function togglePasswordVisibility() {
+                    const passwordInput = document.getElementById('password');
+                    const eyeIcon = document.getElementById('eyeIcon');
+
+                    // Toggle the type of the password input between 'password' and 'text'
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        eyeIcon.src = '/assects/icons/eye-open-svgrepo-com (1).svg'; // Closed eye icon
+                    } else {
+                        passwordInput.type = 'password';
+                        eyeIcon.src = '/assects/icons/eye-closed-svgrepo-com (1).svg'; // Open eye icon
+                    }
+                }
+
+
+            </script>
+
+
+            <script type="module">
+                import {handleFormSubmission} from '/js/DataUploader.js'
+
+                const loginForm = document.getElementById('LoginForm');
+                handleFormSubmission(loginForm, '/user/log-in');
+
+            </script>
+
+
+
+            <!-- <script>
                 let btnText = document.getElementById('text')
                 let loader = document.getElementById('loader')
                 const mainalert = document.getElementById('alert')
@@ -173,7 +165,7 @@
 
 
 
-            </script>
+            </script> -->
     </body>
 
 </html>

@@ -68,7 +68,7 @@
 }
 
 .bd-mode-toggle {
-    z-index: 1500;
+    z-index: 1500 !important;
 }
 
 .bd-mode-toggle .dropdown-menu .active .bi {
@@ -82,6 +82,42 @@
 
 .mess{
     transform: translate(-10px,100px)   ;
+}
+
+.error {
+    border: 1px solid red !important;
+}
+.spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side, #ffffff 94%, #0000) top/6.4px 6.4px no-repeat,
+        conic-gradient(#0000 30%, #ffffff);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 7px), #000 0);
+    animation: spinner-c7wet2 1s infinite linear;
+}
+
+@keyframes spinner-c7wet2 {
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.mybtn {
+    display: grid !important;
+    place-items: center;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.alert-wd{
+    width: fit-content;
+}
+#Message{
+    font-size: 25px;
+    padding: 0px 30px;
 }
 
 /* .slider-text{

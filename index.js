@@ -27,7 +27,7 @@ app.set('views', 'pages')
 
 //serving static documents
 
-app.use(express.json())
+app.use(express.json({ limit: '100mb' }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 // app.use('/uploads',express.static('uploads'))
